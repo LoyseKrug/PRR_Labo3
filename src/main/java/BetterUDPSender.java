@@ -11,7 +11,7 @@ public class BetterUDPSender {
 
     private DatagramSocket socket;
 
-    public void SendPacket(byte[] content, InetAddress address, int port) throws CommunicationErrorException {
+    public void SendMessage(byte[] content, InetAddress address, int port) throws CommunicationErrorException {
 
         try {
 
