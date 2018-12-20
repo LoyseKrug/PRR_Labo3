@@ -37,10 +37,7 @@ public class Main {
             candidats.add(new Candidate(Protocole.ipAdresses[i], Protocole.basePort + i));
         }
 
-        if(args.length == 2){
-            new Applicatif(new Election(candidats, Byte.parseByte(line)));
-        }else{
-            System.out.println("Wrong number of arguments");
-        }
+        new Applicatif(new Election(candidats, Byte.parseByte(line)));
+
     }
 }
