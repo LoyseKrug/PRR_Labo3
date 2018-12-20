@@ -36,7 +36,7 @@ public class BetterUDPReciever extends Thread {
     private byte[] resultBuffer;
     private byte[] acknowlegment;
 
-    public void BetterUDPReciever(int port){
+    public BetterUDPReciever(int port){
         try {
             socket = new DatagramSocket(port);
             socketWithTimeout = new DatagramSocket(port);
