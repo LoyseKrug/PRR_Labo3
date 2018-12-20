@@ -34,15 +34,12 @@ public class BetterUDPReciever extends Thread {
     // Connection related variables
 
     private DatagramSocket socket;
-    private DatagramSocket socketWithTimeout;
     private boolean isRunning;
 
     //buffer contains type of the message, for each site
     private byte[] buffer;
 
     //Contains, type of the message, + for all of the four sites, the aptitude + a byte indicating the apritude is given
-    private byte[] announceBuffer;
-    private byte[] resultBuffer;
     private byte[] acknowlegment;
 
     /**
@@ -52,8 +49,6 @@ public class BetterUDPReciever extends Thread {
     public BetterUDPReciever(int port){
         try {
             socket = new DatagramSocket(port);
-            socketWithTimeout = new DatagramSocket(port);
-            socketWithTimeout.setSoTimeout(Protocole.timeout);
             acknowlegment = new byte[1];
             acknowlegment[0] = Protocole.ACKNOWLEGMENT;
 
