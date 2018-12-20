@@ -9,16 +9,13 @@ public class BetterUDPSender {
         }
     }
 
-    private int port;
     private DatagramSocket socket;
-
-    public BetterUDPSender() throws SocketException{
-        socket = new DatagramSocket();
-    }
 
     public void SendPacket(byte[] content, InetAddress address, int port) throws CommunicationErrorException {
 
         try {
+
+            socket = new DatagramSocket();
 
             DatagramPacket packet = new DatagramPacket(content, content.length, address, port);
 
