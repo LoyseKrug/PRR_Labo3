@@ -47,6 +47,7 @@ public class BetterUDPReciever extends Thread {
      * @param port listening port
      */
     public BetterUDPReciever(int port){
+        buffer = new byte[256];
         try {
             socket = new DatagramSocket(port);
             acknowlegment = new byte[1];
@@ -106,8 +107,8 @@ public class BetterUDPReciever extends Thread {
     public void run() {
         isRunning = true;
         while(isRunning){
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 byte messageType = buffer[0];
 

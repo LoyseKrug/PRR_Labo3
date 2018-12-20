@@ -71,7 +71,7 @@ public class Election implements BetterUDPReciever.Observer{
 
         budps = new BetterUDPSender();
 
-        budpr = new BetterUDPReciever(Protocole.basePort + id);
+        budpr = new BetterUDPReciever(Protocole.basePort + id + 4);
         budpr.registerObserver(this);
         budpr.start();
     }
