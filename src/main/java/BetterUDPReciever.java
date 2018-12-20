@@ -36,10 +36,10 @@ public class BetterUDPReciever extends Thread {
     private byte[] resultBuffer;
     private byte[] acknowlegment;
 
-    public void BetterUDPReciever(int id){
+    public void BetterUDPReciever(int port){
         try {
-            socket = new DatagramSocket(Protocole.basePort + id);
-            socketWithTimeout = new DatagramSocket(Protocole.basePort + id);
+            socket = new DatagramSocket(port);
+            socketWithTimeout = new DatagramSocket(port);
             socketWithTimeout.setSoTimeout(Protocole.timeout);
             acknowlegment = new byte[1];
             acknowlegment[0] = Protocole.ACKNOWLEGMENT;
