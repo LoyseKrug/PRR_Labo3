@@ -17,13 +17,7 @@ Result:   00000001  + id of chosen          // 1 + 1 bytes
 Request:  00000010  total 1 byte
 
 Acknowlegement of announce:
-          00000011  +  00000000   total 2 bytes
-
-Acknowlegement of result:
-          00000011  +  00000001   total 2 bytes
-
-Acknowlegement of request:
-          00000011  +  00000010   total 2 bytes
+          00000011  total 1 byte
 
 
 
@@ -41,6 +35,8 @@ public class Protocole {
     public static final byte TREATED = 00000001;
     public static final int timeout = 2000;
     public static final int basePort = 1992;
+
+    public static final int NBSITES = 4;
 
     //Insert your addresses here
     public static String[] ipAdresses = {"localhost", "localhost", "localhost", "localhost"};

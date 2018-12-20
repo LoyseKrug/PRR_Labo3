@@ -12,8 +12,15 @@ public class Util {
         return bb.array();
     }
 
-    private int convertByteArrayToInt(byte[] intBytes){
+    public static int convertByteArrayToInt(byte[] intBytes){
         ByteBuffer byteBuffer = ByteBuffer.wrap(intBytes);
         return byteBuffer.getInt();
     }
+
+    public static void copyToFillByteArray(byte[] arrayDest, byte[] arraySource){
+        for(int i = 0; i < arrayDest.length; ++i){
+            arrayDest[i] = arraySource[i];
+        }
+    }
+
 }

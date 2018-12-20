@@ -1,29 +1,39 @@
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Authors: Adrien Allemand, Loyse Krug
  */
 
-public class Election{
-    public enum State{ELECTION,NORMAL, RESULT}
+public class Election implements BetterUDPReciever.Observer{
+
+    @Override
+    public void onMessageRecieved(byte[] message) {
+        switch (message[0]){
+            case Protocole.ANNOUNCE:
+                processAnnounce(message);
+                break;
+            case Protocole.RESULT:
+                processResult(message);
+                break;
+            default: //if the message is REQUEST type the site doesn't have to send the message furtherer
+                break;
+        }
+    }
+
+    public enum State{ELECTION,NORMAL}
+
+    private BetterUDPReciever budpr;
+    private BetterUDPSender budps;
 
     private State state;
     private byte id;
     private Candidate chosen;
+    private int bestAptitude;
     private List<Candidate> candidates = new ArrayList<Candidate>();
-
-    //private Thread askingThread;
-    private Thread messageProcessor;
-
-    private DatagramSocket socket;
-    private DatagramSocket socketWithTimeout;
-    private boolean isRunning;
-
-    //buffer contains type of the message, for each site
-    private byte[] buffer;
 
     //Contains, type of the message, + for all of the four sites, the aptitude + a byte indicating the apritude is given
     private byte[] announceBuffer;
@@ -36,61 +46,21 @@ public class Election{
      * @param id, id of the
      */
     public Election(List<Candidate> candidates, byte id){
+
         this.candidates = candidates;
         this.id = id;
         this.state = State.NORMAL;
         chosen = null;
-        buffer = new byte[256];
+        bestAptitude = Protocole.basePort + id;
         announceBuffer = new byte[21];
         resultBuffer = new byte[6];
-        acknowlegment = new byte[2];
+        acknowlegment = new byte[1];
 
+        budps = new BetterUDPSender();
 
-        try {
-            socket = new DatagramSocket(Protocole.basePort + id);
-            socketWithTimeout = new DatagramSocket(Protocole.basePort + id);
-            socketWithTimeout.setSoTimeout(Protocole.timeout);
-        } catch (SocketException e) {
-            throw new RuntimeException("error opening datagramm socket");
-        }
-
-        messageProcessor = new Thread(){
-            @Override
-            public void run(){
-                isRunning = true;
-                while(isRunning){
-                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                    try {
-                        socket.receive(packet);
-                        byte messageType = buffer[0];
-                        //Send acknowlegment to the sender
-                        InetAddress address = packet.getAddress();
-                        int port = packet.getPort();
-                        acknowlegment[0] = Protocole.ACKNOWLEGMENT;
-                        acknowlegment[1] = messageType;
-                        packet = new DatagramPacket(acknowlegment, acknowlegment.length, address, port);
-                        socket.send(packet);
-
-                        switch (messageType){
-                            case Protocole.ANNOUNCE:
-                                processAnnounce();
-                                break;
-                            case Protocole.RESULT:
-                                processResult();
-                                break;
-                            default: //if the message is REQUEST type the site doesn't have to send the message furtherer
-                                break;
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-        messageProcessor.start();
-
+        budpr = new BetterUDPReciever(Protocole.basePort + id);
+        budpr.registerObserver(this);
+        budpr.start();
     }
 
     public void launchElection(){
@@ -111,18 +81,12 @@ public class Election{
             for(int j = 1; j <= 4 ; j++){
                 announceBuffer[(i * 5) + 1 + j] = aptitude[j - 1];
             }
-            try {
-                sendMessage(socketWithTimeout, announceBuffer, id);
-            } catch (SocketTimeoutException e) {
-                e.printStackTrace();
-            }
+            bestAptitude = id + Protocole.basePort;
+            sendToNext(announceBuffer);
         }
-
-
-
-
     }
 
+    /*
     private void sendMessage(DatagramSocket socket, byte[] buffer, byte id) throws SocketTimeoutException {
         InetAddress address = null;
         try {
@@ -139,19 +103,66 @@ public class Election{
             throw new RuntimeException("Error sending the packet");
         }
     }
+    */
 
-    private void processAnnounce(){
 
-        //set the status on ANNOUNCE mode
-        //prepare the message to send
-        //while not getting an answer, wait try to send to each of the machines
+    private synchronized  void processAnnounce(byte[] message){
+        Util.copyToFillByteArray(announceBuffer, message);
+        if(announceBuffer[5 * id + 1] == Protocole.NOTTREATED){
+            if(state == State.NORMAL || newAnnounceIsBetter(message)){
+                announceBuffer[5 * id + 1] = Protocole.TREATED;
+                byte[] apt = Util.intToBytes(Protocole.basePort + id);
+                for(int i = 1; i <= 4 ;++i){
+                    announceBuffer[5 * id + 1 + i] = apt[i - 1];
+                }
+
+                //We check if the message contains a better aptitude than the one registered until now
+                for(int i = 0; i < 4; ++i){
+                    int aptitude = Util.convertByteArrayToInt(Arrays.copyOfRange(message, 5 * i + 2, 5 * i + 6));
+                    if(aptitude > bestAptitude){
+                        bestAptitude = aptitude;
+                    }
+                }
+                sendToNext(announceBuffer);
+            }else{
+                System.out.println(id + ": the last recieved announce has been cancelled");
+            }
+
+        } else { //the announce has already passed by here
+            analyseResults(message);
+            byte chosenId = (byte)(chosen.port - Protocole.basePort);
+            resultBuffer[0] = Protocole.RESULT;
+            resultBuffer[1] = chosenId;
+            for(int i = 0; i < 4; ++i){
+                if(i == id){
+                    resultBuffer[2 + i] = Protocole.TREATED;
+                }else{
+                    resultBuffer[2 + i] = Protocole.NOTTREATED;
+                }
+            }
+            sendToNext(resultBuffer);
+        }
     }
 
-    private void processResult(){
-        //set the status on NORMAL mode
-        //set the chosen
-        //prepare the message to send
-        //while not getting an answer, wait try to send to each of the machines
+    private synchronized void processResult(byte[] message){
+        Util.copyToFillByteArray(resultBuffer, message);
+        if(resultBuffer[id + 2] == Protocole.NOTTREATED){
+            if(state == State.ELECTION){
+                resultBuffer[id + 2] = Protocole.TREATED;
+                chosen = candidates.get(resultBuffer[1]);
+                //we change back the best aptitude registered for the next election
+                bestAptitude = Protocole.basePort + id;
+                state = State.NORMAL;
+                sendToNext(resultBuffer);
+            }else{
+                System.out.println("Error");
+            }
+        }else{
+            System.out.println("The election is finished");
+            if(resultBuffer[(chosen.port - Protocole.basePort) + 2] == Protocole.NOTTREATED){
+                launchElection();
+            }
+        }
     }
 
     public Candidate getChosen(){
@@ -162,6 +173,53 @@ public class Election{
         return id;
     }
 
+    private boolean newAnnounceIsBetter(byte[] announce){
+        for(int i = 0; i < Protocole.NBSITES; ++i){
+            int aptitude = Util.convertByteArrayToInt(Arrays.copyOfRange(announce, 5 * i + 2, 5 * i + 6));
+            if(aptitude > bestAptitude){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void analyseResults(byte[] announce){
+        int bestAptitudeId = 0;
+        int bestAptitude = 0;
+        for(int i = 0; i < 4; ++i){
+            int aptitude = Util.convertByteArrayToInt(Arrays.copyOfRange(announce, 5 * i + 2, 5 * i + 6));
+            if(aptitude > bestAptitude){
+                bestAptitude = aptitude;
+                bestAptitudeId = i;
+            }
+        }
+        chosen = candidates.get(bestAptitudeId);
+    }
 
+    private void sendToNext(byte[] message){
+        boolean stopTrying = false;
+        int idToSendTo = (id + 1) % Protocole.NBSITES;
+        while(stopTrying == false){
+
+            if(idToSendTo != id) {
+                chosen = candidates.get(id);
+                System.out.println(id + ":  All others sites around are down");
+                stopTrying = true;
+            }else{
+                try {
+                    InetAddress address = InetAddress.getByName(Protocole.ipAdresses[idToSendTo]);
+                    budps.SendMessage(announceBuffer, address, Protocole.basePort + idToSendTo);
+                    stopTrying = true;
+                    state = State.ELECTION;
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                } catch (BetterUDPSender.CommunicationErrorException e) {
+                    e.printStackTrace();
+                    idToSendTo = (idToSendTo + 1) % Protocole.NBSITES;
+                    state = State.NORMAL;
+                }
+            }
+        }
+    }
 }
