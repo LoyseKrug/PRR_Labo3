@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a16e04da-e331-4073-90cd-3e82ada1ef66" name="Default Changelist" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/PRR_Labo3.iml" afterPath="$PROJECT_DIR$/PRR_Labo3.iml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Election.java" afterPath="$PROJECT_DIR$/src/main/java/Election.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Protocole.java" afterPath="$PROJECT_DIR$/src/main/java/Protocole.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Util.java" afterPath="$PROJECT_DIR$/src/main/java/Util.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -104,8 +98,8 @@
       <file leaf-file-name="BetterUDPReciever.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BetterUDPReciever.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="40" column="22" lean-forward="false" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+            <state relative-caret-position="1600">
+              <caret line="112" column="34" lean-forward="false" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -126,8 +120,8 @@
       <file leaf-file-name="Protocole.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Protocole.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="42" lean-forward="false" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
+            <state relative-caret-position="153">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="14" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -136,15 +130,15 @@
       <file leaf-file-name="Election.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Election.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="716">
-              <caret line="221" column="13" lean-forward="true" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="13" />
+            <state relative-caret-position="4760">
+              <caret line="280" column="33" lean-forward="false" selection-start-line="280" selection-start-column="33" selection-end-line="280" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#949#960#0" expanded="true" />
-                <element signature="e#5951#5952#0" expanded="true" />
-                <element signature="e#5980#5981#0" expanded="true" />
-                <element signature="e#6005#6006#0" expanded="true" />
-                <element signature="e#6030#6031#0" expanded="true" />
+                <element signature="e#1515#1526#0" expanded="true" />
+                <element signature="e#4258#4259#0" expanded="true" />
+                <element signature="e#4287#4288#0" expanded="true" />
+                <element signature="e#4374#4375#0" expanded="true" />
+                <element signature="e#4399#4400#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -378,12 +372,12 @@
       <workItem from="1545291762939" duration="6339000" />
       <workItem from="1545300906139" duration="1989000" />
       <workItem from="1545323213112" duration="4472000" />
-      <workItem from="1545327791426" duration="8713000" />
+      <workItem from="1545327791426" duration="11851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46427000" />
+    <option name="totallyTimeSpent" value="49565000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1330" height="1047" extended-state="0" />
@@ -518,11 +512,11 @@
           <caret line="15" column="68" lean-forward="true" selection-start-line="15" selection-start-column="68" selection-end-line="15" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#949#960#0" expanded="true" />
-            <element signature="e#5951#5952#0" expanded="true" />
-            <element signature="e#5980#5981#0" expanded="true" />
-            <element signature="e#6005#6006#0" expanded="true" />
-            <element signature="e#6030#6031#0" expanded="true" />
+            <element signature="e#1515#1526#0" expanded="true" />
+            <element signature="e#4258#4259#0" expanded="true" />
+            <element signature="e#4287#4288#0" expanded="true" />
+            <element signature="e#4374#4375#0" expanded="true" />
+            <element signature="e#4399#4400#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -585,11 +579,11 @@
           <caret line="42" column="31" lean-forward="true" selection-start-line="42" selection-start-column="31" selection-end-line="42" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#949#960#0" expanded="true" />
-            <element signature="e#5951#5952#0" expanded="true" />
-            <element signature="e#5980#5981#0" expanded="true" />
-            <element signature="e#6005#6006#0" expanded="true" />
-            <element signature="e#6030#6031#0" expanded="true" />
+            <element signature="e#1515#1526#0" expanded="true" />
+            <element signature="e#4258#4259#0" expanded="true" />
+            <element signature="e#4287#4288#0" expanded="true" />
+            <element signature="e#4374#4375#0" expanded="true" />
+            <element signature="e#4399#4400#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -599,14 +593,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BetterUDPReciever.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="40" column="22" lean-forward="false" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -647,25 +633,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BetterUDPReciever.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1600">
+          <caret line="112" column="34" lean-forward="false" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Protocole.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="42" lean-forward="false" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="14" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Election.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="221" column="13" lean-forward="true" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="13" />
+        <state relative-caret-position="4760">
+          <caret line="280" column="33" lean-forward="false" selection-start-line="280" selection-start-column="33" selection-end-line="280" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#949#960#0" expanded="true" />
-            <element signature="e#5951#5952#0" expanded="true" />
-            <element signature="e#5980#5981#0" expanded="true" />
-            <element signature="e#6005#6006#0" expanded="true" />
-            <element signature="e#6030#6031#0" expanded="true" />
+            <element signature="e#1515#1526#0" expanded="true" />
+            <element signature="e#4258#4259#0" expanded="true" />
+            <element signature="e#4287#4288#0" expanded="true" />
+            <element signature="e#4374#4375#0" expanded="true" />
+            <element signature="e#4399#4400#0" expanded="true" />
           </folding>
         </state>
       </provider>
