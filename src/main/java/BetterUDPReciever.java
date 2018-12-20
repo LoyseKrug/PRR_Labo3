@@ -1,3 +1,9 @@
+/**
+ * Authors: Adrien Allemand, Loyse Krug
+ *
+ * sources: https://www.techyourchance.com/thread-safe-observer-design-pattern-in-java/
+ */
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -7,12 +13,15 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
 
-/*
-https://www.techyourchance.com/thread-safe-observer-design-pattern-in-java/
+/**
+ * Listen on a port from its create and Answer with an ACK to every messages it recieves, before forwarding the content
+ * of the message to all its Observers
  */
-
 public class BetterUDPReciever extends Thread {
 
+    /**
+     * Implements a unique method that treat the recieved message
+     */
     public interface Observer {
         void onMessageRecieved(byte[] message);
     }
@@ -36,6 +45,10 @@ public class BetterUDPReciever extends Thread {
     private byte[] resultBuffer;
     private byte[] acknowlegment;
 
+    /**
+     * Constructor
+     * @param port listening port
+     */
     public BetterUDPReciever(int port){
         try {
             socket = new DatagramSocket(port);

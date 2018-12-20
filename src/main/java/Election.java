@@ -1,5 +1,6 @@
-
-
+/**
+ * Authors: Adrien Allemand, Loyse Krug
+ */
 
 import java.net.*;
 import java.util.ArrayList;
@@ -7,11 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Authors: Adrien Allemand, Loyse Krug
- */
-
-/**
  * Class that launch and treate the different messages of an election
+ * it inherits from BetterUDPReciever.Observer and therefore has an
+ * onMessageRecieved methode that will be called every time a message
+ * arrives
  */
 public class Election implements BetterUDPReciever.Observer{
 

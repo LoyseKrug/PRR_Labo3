@@ -1,3 +1,9 @@
+/**
+ * Authors: Adrien Allemand, Loyse Krug
+ *
+ * Source: https://www.techyourchance.com/thread-safe-observer-design-pattern-in-java/
+ */
+
 import java.io.IOException;
 import java.net.*;
 
@@ -11,6 +17,13 @@ public class BetterUDPSender {
 
     private DatagramSocket socket;
 
+    /**
+     * Send a message and throw an error if no acknowlwgement is recieved from the reciever
+     * @param content
+     * @param address
+     * @param port
+     * @throws CommunicationErrorException
+     */
     public void SendMessage(byte[] content, InetAddress address, int port) throws CommunicationErrorException {
 
         try {
